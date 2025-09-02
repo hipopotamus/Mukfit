@@ -27,7 +27,6 @@ public class AccountAccessDeniedHandler implements AccessDeniedHandler {
         ErrorResponse accessException =
                 new ErrorResponse("Forbidden", forbiddenExCode.getMessage(), forbiddenExCode.getCode());
 
-        ObjectMapper objectMapper = new ObjectMapper();
         String authenticationExJson = objectMapper.writeValueAsString(accessException);
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json");

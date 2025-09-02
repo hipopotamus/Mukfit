@@ -3,6 +3,7 @@ package muckfit.restaurantreview.global.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import muckfit.restaurantreview.global.security.authentication.UserAccount;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,7 +31,12 @@ public class JwtProcessor {
     @Value("${jwt.header}")
     String header;
 
-    private final Key signingKey = Keys.hmacShaKeyFor(secretKey.getBytes());
+    private Key signingKey;
+
+    @PostConstruct
+    public void keyInit() {
+        this.signingKey = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
 
     public String createAuthJwtToken(UserAccount userAccount) {
 
@@ -62,7 +68,7 @@ public class JwtProcessor {
 
     public Claims verifyJwtToken(String jwtToken) {
         return Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(jwtToken)
                 .getBody();

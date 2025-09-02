@@ -1,9 +1,10 @@
 package muckfit.restaurantreview.global.security.handler;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import muckfit.restaurantreview.global.exception.ExceptionCode;
 import muckfit.restaurantreview.global.exception.dto.ErrorResponse;
 import org.springframework.security.core.AuthenticationException;
@@ -13,7 +14,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class AccountAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
@@ -24,7 +28,7 @@ public class AccountAuthenticationEntryPoint implements AuthenticationEntryPoint
                 new ErrorResponse("UnAuthentication",
                         ExceptionCode.UN_AUTHENTICATION.getMessage(), unAuthenticationExCode.getCode());
 
-        String authenticationExJson = new Gson().toJson(unAuthException);
+        String authenticationExJson = objectMapper.writeValueAsString(unAuthException);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

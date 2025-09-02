@@ -23,6 +23,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final JwtProcessor jwtProcessor;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtProcessor jwtProcessor) {
         this.setFilterProcessesUrl("/login");
@@ -65,7 +66,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ErrorResponse authException =
                 new ErrorResponse("FailToAuthentication", failAuthentication.getMessage(), failAuthentication.getCode());
 
-        ObjectMapper objectMapper = new ObjectMapper();
         String authExceptionJson = objectMapper.writeValueAsString(authException);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");

@@ -5,12 +5,10 @@ import muckfit.restaurantreview.global.exception.ExceptionCode;
 import muckfit.restaurantreview.global.exception.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@Component
 @RestControllerAdvice
 public class ExceptionAdvice {
 
@@ -25,7 +23,7 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> businessLoginExceptionHandler(BusinessLogicException e) {
+    public ResponseEntity<ErrorResponse> businessLogicExceptionHandler(BusinessLogicException e) {
         ExceptionCode exceptionCode = e.getExceptionCode();
         ErrorResponse errorResponse =
                 new ErrorResponse(e.getClass().getSimpleName(), e.getMessage(), exceptionCode.getCode());

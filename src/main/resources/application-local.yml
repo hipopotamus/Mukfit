@@ -17,3 +17,11 @@ spring:
       pageable:
         default-page-size: 10
         one-indexed-parameters: true
+
+jwt:
+  secret-key: local
+  expiration: 36000000
+  prefix: Bearer
+  header: Authorization
+
+front: http://localhost:3000

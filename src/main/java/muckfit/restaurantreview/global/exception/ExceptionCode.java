@@ -11,7 +11,7 @@ public enum ExceptionCode {
     UN_AUTHENTICATION(401, "인증되지 않았습니다.", "003"),
     NOT_FOUND_ACCOUNT(404, "계정을 찾을 수 없습니다.", "004"),
     DUPLICATION_EMAIL(400, "동일한 이메일의 계정이 존재합니다.", "005"),
-    IlLEGAL_PARAMETER(400, "잘못된 인자입니다.", "006"),
+    ILLEGAL_PARAMETER(400, "잘못된 인자입니다.", "006"),
     SELF_FOLLOW(400,  "자기 자신을 팔로우 할 수 없습니다.", "007"),
     FORBIDDEN(403, "잘못된 접근입니다.", "008"),
     NOT_FOUND_BOARD(404, "게시글을 찾을 수 없습니다.", "009"),

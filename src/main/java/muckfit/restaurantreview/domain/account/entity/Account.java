@@ -10,7 +10,7 @@ public class Account {
 
     @Id
     @GeneratedValue
-    @Column(name = "acocunt_id")
+    @Column(name = "account_id")
     private Long id;
 
     private String email;

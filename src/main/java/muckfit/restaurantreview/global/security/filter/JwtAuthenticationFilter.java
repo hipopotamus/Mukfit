@@ -1,7 +1,6 @@
 package muckfit.restaurantreview.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -66,12 +65,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ErrorResponse authException =
                 new ErrorResponse("FailToAuthentication", failAuthentication.getMessage(), failAuthentication.getCode());
 
-        String authExceptionJson = new Gson().toJson(authException);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String authExceptionJson = objectMapper.writeValueAsString(authException);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(authExceptionJson);
-
-
     }
 }

@@ -32,7 +32,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String jwtHeader = request.getHeader(jwtProcessor.getHeader());
 
         // verifyJwtHeader
-        if (jwtHeader == null || !jwtHeader.startsWith(jwtProcessor.getPrefix())) {
+        if (jwtProcessor.isCorrectJwtToken(jwtHeader)) {
             chain.doFilter(request, response);
             return;
         }

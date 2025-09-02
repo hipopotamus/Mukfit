@@ -8,9 +8,11 @@ import muckfit.restaurantreview.global.exception.ExceptionCode;
 import muckfit.restaurantreview.global.exception.dto.ErrorResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class AccountAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,16 +30,19 @@ public class JwtProcessor {
     @Value("${jwt.header}")
     String header;
 
+    private final Key signingKey = Keys.hmacShaKeyFor(secretKey.getBytes());
+
     public String createAuthJwtToken(UserAccount userAccount) {
 
         Map<String, Object> claims = createClaims(userAccount);
 
+        long nowTime = System.currentTimeMillis();
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userAccount.getAccount().getId().toString())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                .setIssuedAt(new Date(nowTime))
+                .setExpiration(new Date(nowTime + expiration))
+                .signWith(signingKey)
                 .compact();
     }
 
@@ -64,10 +68,12 @@ public class JwtProcessor {
                 .getBody();
     }
 
-    public String extractJwtToken(String jwtHeader) {
+    public boolean isCorrectJwtToken(String jwt) {
+        return jwt != null && jwt.startsWith(prefix);
+    }
 
-        int dotIndex = jwtHeader.lastIndexOf(" ");
-        return jwtHeader.substring(dotIndex + 1);
+    public String extractJwtToken(String jwtHeader) {
+        return jwtHeader.substring(prefix.length() + 1);
     }
 
     public String getPrefix() {

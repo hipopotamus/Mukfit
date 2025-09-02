@@ -3,7 +3,10 @@ package muckfit.restaurantreview.global.security.config;
 import lombok.RequiredArgsConstructor;
 import muckfit.restaurantreview.global.security.filter.JwtAuthenticationFilter;
 import muckfit.restaurantreview.global.security.filter.JwtAuthorizationFilter;
+import muckfit.restaurantreview.global.security.handler.AccountAccessDeniedHandler;
+import muckfit.restaurantreview.global.security.handler.AccountAuthenticationEntryPoint;
 import muckfit.restaurantreview.global.security.jwt.JwtProcessor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +35,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Value("${front}")
+    String frontUrl;
+
     private final JwtProcessor jwtProcessor;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final AccountAccessDeniedHandler accountAccessDeniedHandler;
+    private final AccountAuthenticationEntryPoint accountAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,7 +54,10 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint(accountAuthenticationEntryPoint)
+                        .accessDeniedHandler(accountAccessDeniedHandler));
 
 
         http
@@ -79,7 +90,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
+        corsConfiguration.setAllowedOrigins(List.of(frontUrl));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS", "PUT"));
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
         corsConfiguration.setAllowCredentials(true);

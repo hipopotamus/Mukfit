@@ -8,9 +8,11 @@ import muckfit.restaurantreview.global.exception.ExceptionCode;
 import muckfit.restaurantreview.global.exception.dto.ErrorResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class AccountAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override

@@ -37,7 +37,6 @@ dependencies {
     //utility
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    implementation 'com.google.code.gson:gson:2.9.1'
 
     //spring
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

@@ -37,6 +37,7 @@ dependencies {
     //utility
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'com.google.code.gson:gson:2.9.1'
 
     //spring
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -44,6 +45,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
     //db
     runtimeOnly 'com.h2database:h2'

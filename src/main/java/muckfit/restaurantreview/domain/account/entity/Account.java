@@ -1,12 +1,13 @@
 package muckfit.restaurantreview.domain.account.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import muckfit.restaurantreview.domain.account.enums.Role;
+import muckfit.restaurantreview.global.auditing.BaseField;
 
 @Entity
-public class Account {
+@Getter
+public class Account extends BaseField {
 
     @Id
     @GeneratedValue
@@ -16,4 +17,8 @@ public class Account {
     private String email;
 
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 }

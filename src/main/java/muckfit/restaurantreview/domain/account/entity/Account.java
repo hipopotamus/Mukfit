@@ -20,5 +20,4 @@ public class Account extends BaseField {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
 }

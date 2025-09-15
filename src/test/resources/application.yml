@@ -1,0 +1,37 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: MuckFit
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
+
+jwt:
+  secret-key: local
+  expiration: 36000000
+  prefix: Bearer
+  header: Authorization
+
+front: http://localhost:3000
